@@ -1,6 +1,10 @@
 # Corozo
 A simple script to encode 4K HDR content using ffmpeg
 
+## Blog post explanation
+For a more in-depth explanation of this script and its options, [please visit this post](https://medium.com/@yllanos/how-to-encode-a-4k-hdr-movie-using-ffmpeg-while-maintaining-selected-auio-tracks-intact-from-source-d1e2f6a16162)
+
+## The script
 ```Shell
 
 nohup ffmpeg -hide_banner \
@@ -19,5 +23,12 @@ nohup ffmpeg -hide_banner \
 -c:a copy \
 My.Movie.2019.2160p.BluRay.REMUX.HEVC.DTS-HD.MA.TrueHD.7.1.Atmos.mkv  > job.log &
 
+
+```
+
+## To check job progress
+```Shell
+
+tail -f job.log
 
 ```
