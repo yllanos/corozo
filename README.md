@@ -11,8 +11,8 @@ nohup ffmpeg -hide_banner \
 -i "../storage/My.Source.Movie.2019.2160p.BluRay.REMUX.HEVC.DTS-HD.MA.TrueHD.7.1.Atmos.mkv" \
 -pix_fmt yuv420p10le \
 -map_chapters 0 \
--metadata title="Captain America: The Winter Soldier (2014)" \
--map 0:0 -metadata:s:v:0 language=eng -metadata:s:v:0 title="Captain America: The Winter Soldier (2014)" \
+-metadata title="My Awesome Movie (2019)" \
+-map 0:0 -metadata:s:v:0 language=eng -metadata:s:v:0 title="My Awesome Movie (2019)" \
 -map 0:1 -metadata:s:a:0 language=eng -metadata:s:a:0 title="Dolby TrueHD 7.1 (Atmos)" \
 -map 0:7 -metadata:s:a:0 language=spa -metadata:s:a:1 title="EAC-3 7.1" \
 -map 0:2 -metadata:s:a:0 language=eng -metadata:s:a:2 title="DTS-HD MA 7.1" \
