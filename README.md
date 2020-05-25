@@ -5,7 +5,7 @@ A simple script to encode 4K HDR content using ffmpeg
 For a more in-depth explanation of this script and its options, [please visit this post](https://medium.com/@yllanos/how-to-encode-a-4k-hdr-movie-using-ffmpeg-while-maintaining-selected-auio-tracks-intact-from-source-d1e2f6a16162)
 
 ## Requirements
-ffmpeg 3.x or later with libx265 configured. For more detail, Iḿ going to share my config (as enabled by my Linux distribution):
+ffmpeg 3.x/4.x with libx265 configured. For more detail, Iḿ going to share my config (as enabled by my Linux distribution):
 
 ```Shell
 
@@ -26,7 +26,7 @@ configuration: --prefix=/usr --extra-version='1~deb9u1' --toolchain=hardened \
 
 ```
 
-## The script
+## The script (FFMPEG v3.x)
 ```Shell
 
 nohup ffmpeg -hide_banner \
@@ -44,6 +44,28 @@ nohup ffmpeg -hide_banner \
 -x265-params crf=18:aq-mode=3:keyint=60:bframes=3:vbv-bufsize=75000:vbv-maxrate=75000:hdr-opt=1:repeat-headers=1:colorprim=bt2020:transfer=smpte-st-2084:colormatrix=bt2020nc:master-display="G(13250,34500)B(7500,3000)R(34000,16000)WP(15635,16450)L(10000000,500)" \
 -c:a copy \
 My.Movie.2019.2160p.BluRay.REMUX.HEVC.DTS-HD.MA.TrueHD.7.1.Atmos.mkv  > job.log &
+
+
+```
+
+## The script (FFMPEG v4.x)
+I have updated this project to also include support for ffmpeg 4.x
+
+I have simplified things: I doon't worry about audio tracks anymore, I just focus on encoding the video track. When done, I just join all needed tracks using [MKVToolNix](https://mkvtoolnix.download). This is a far more flexible approach.
+
+```Shell
+
+nohup ffmpeg -hide_banner \
+-i "../storage/My.Source.Movie.2019.2160p.BluRay.REMUX.HEVC.DTS-HD.MA.TrueHD.7.1.Atmos.mkv" \
+-pix_fmt yuv420p10le \
+-max_muxing_queue_size 9999 \
+-map_chapters 0 \
+-metadata title="My Awesome Movie (2019)" \
+-map 0:0 -metadata:s:v:0 language=eng -metadata:s:v:0 title="My Awesome Movie (2019)" \
+-metadata:s:t:0 filename="" -metadata:s:t:0 mimetype="image/jpeg" \
+-c:v libx265 -preset fast \
+-x265-params crf=18:no-sao=1:aq-mode=3:max-merge=4:keyint=60:bframes=3:repeat-headers=1:colorprim=bt2020:transfer=smpte2084:colormatrix=bt2020nc:master-display="G(13250,34500)B(7500,3000)R(34000,16000)WP(15635,16450)L(10000000,500)" \
+My.Movie.2019.2160p.BluRay.REMUX.HEVC.DTS-HD.MA.TrueHD.7.1.Atmos.mkv > job.log &
 
 
 ```
